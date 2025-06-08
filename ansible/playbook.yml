@@ -1,0 +1,109 @@
+---
+- name: Test and deploy Redoc
+  hosts: all
+  become: yes
+  gather_facts: yes
+
+  vars:
+    app_user: redocuser
+    app_dir: /opt/redoc
+    python_version: 3.9
+
+  tasks:
+    - name: Update apt cache
+      apt:
+        update_cache: yes
+        cache_valid_time: 3600
+
+    - name: Install system dependencies
+      apt:
+        name:
+          - python{{ python_version }}
+          - python{{ python_version }}-venv
+          - python3-pip
+          - build-essential
+          - libpoppler-cpp-dev
+          - tesseract-ocr
+          - tesseract-ocr-eng
+          - git
+        state: present
+
+    - name: Create application user
+      user:
+        name: "{{ app_user }}"
+        system: yes
+        create_home: yes
+        shell: /bin/bash
+
+    - name: Create application directory
+      file:
+        path: "{{ app_dir }}"
+        state: directory
+        owner: "{{ app_user }}"
+        group: "{{ app_user }}"
+        mode: '0755'
+
+    - name: Copy source code
+      copy:
+        src: "{{ playbook_dir }}/../../"
+        dest: "{{ app_dir }}"
+        remote_src: no
+        owner: "{{ app_user }}"
+        group: "{{ app_user }}"
+
+    - name: Create Python virtual environment
+      pip:
+        virtualenv: "{{ app_dir }}/venv"
+        virtualenv_python: python{{ python_version }}
+        virtualenv_site_packages: no
+        state: present
+        name: pip
+        extra_args: --upgrade
+
+    - name: Install Python dependencies
+      pip:
+        virtualenv: "{{ app_dir }}/venv"
+        requirements: "{{ app_dir }}/requirements-dev.txt"
+        state: present
+
+    - name: Install the package in development mode
+      command: "{{ app_dir }}/venv/bin/pip install -e ."
+      args:
+        chdir: "{{ app_dir }}"
+
+    - name: Run tests
+      command: "{{ app_dir }}/venv/bin/pytest tests/ -v"
+      args:
+        chdir: "{{ app_dir }}"
+      register: test_result
+      ignore_errors: yes
+
+    - name: Show test results
+      debug:
+        var: test_result
+
+    - name: Run linters
+      command: "{{ item }}"
+      args:
+        chdir: "{{ app_dir }}"
+      with_items:
+        - "{{ app_dir }}/venv/bin/black --check ."
+        - "{{ app_dir }}/venv/bin/flake8 ."
+        - "{{ app_dir }}/venv/bin/mypy ."
+      ignore_errors: yes
+      register: lint_results
+
+    - name: Show lint results
+      debug:
+        var: lint_results
+
+    - name: Run security audit
+      command: "{{ app_dir }}/venv/bin/bandit -r redoc/"
+      args:
+        chdir: "{{ app_dir }}"
+      ignore_errors: yes
+      register: security_audit
+
+    - name: Show security audit results
+      debug:
+        var: security_audit

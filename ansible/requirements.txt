@@ -1,0 +1,8 @@
+# Ansible requirements
+ansible>=6.0.0
+ansible-lint>=6.0.0
+molecule>=4.0.0
+molecule-plugins[docker]>=21.0.0
+docker>=5.0.0
+pyyaml>=6.0.0
+jinja2>=3.0.0

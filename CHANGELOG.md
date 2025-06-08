@@ -7,31 +7,30 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 ### Added
-- New CLI interface with interactive mode for document conversion
-- Template support for dynamic document generation
-- New invoice template with customizable fields
-- Support for additional document formats (DOCX, EPUB, Markdown)
-- Enhanced PDF processing with OCR capabilities
-- Rich console output with progress tracking
-- Comprehensive API documentation
-- Automated testing and CI/CD workflows
-- Docker support for easy deployment
-- Example projects and templates
+- **Bidirectional Document-Data Conversion**: New system for converting between documents and structured data
+- **Enhanced CLI**: Added interactive shell mode and improved command-line interface
+- **Template System**: Comprehensive template support for multiple document formats
+- **Invoice Example**: Complete invoice generation example with customizable templates
+- **Docker Support**: Containerized deployment with Docker and Docker Compose
+- **Ansible Playbooks**: Automated testing and deployment with Ansible
+- **Documentation**: Expanded documentation with usage examples and API references
+- **Testing**: Added comprehensive test suite with unit and integration tests
+- **CI/CD**: GitHub Actions workflows for automated testing and deployment
+- **Security**: Enhanced security with dependency scanning and updates
 
 ### Changed
-- Upgraded to Python 3.9+ requirement
-- Restructured project layout for better modularity
-- Improved error handling and user feedback
-- Enhanced documentation with usage examples
-- Updated dependencies to their latest stable versions
-- Optimized performance for large document processing
+- **Project Structure**: Reorganized for better maintainability and scalability
+- **Dependencies**: Updated to latest stable versions
+- **Build System**: Improved build and packaging process
+- **Documentation**: Restructured and expanded documentation
+- **Templates**: Standardized template structure and variables
 
 ### Fixed
-- Fixed issues with PDF text extraction
-- Resolved template rendering bugs
-- Addressed security vulnerabilities in dependencies
-- Fixed compatibility issues with different Python versions
-- Improved error messages for better debugging
+- **PDF Processing**: Improved text extraction and rendering
+- **Template Rendering**: Fixed issues with complex templates
+- **Error Handling**: More descriptive error messages and logging
+- **Compatibility**: Better cross-platform support
+- **Performance**: Optimized document processing for large files
 
 ## [0.1.7] - 2023-11-15
 ### Added

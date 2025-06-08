@@ -14,35 +14,86 @@ documentation = "https://text2doc.github.io/redoc"
 keywords = [
     "document-converter", "pdf", "docx", "html", "xml", "json", "epub", 
     "ocr", "template-engine", "document-processing", "ai", "llm", "ollama",
-    "mistral", "cli-tool", "automation", "productivity"
+    "mistral", "cli-tool", "automation", "productivity", "document-generation",
+    "data-extraction", "template-processing", "batch-processing", "document-automation",
+    "office-automation", "document-parsing", "pdf-generation", "report-generation",
+    "document-management"
 ]
 classifiers = [
+    # Development Status
     "Development Status :: 4 - Beta",
     "Intended Audience :: Developers",
     "Intended Audience :: System Administrators",
     "Intended Audience :: Information Technology",
+    "Intended Audience :: Legal Industry",
+    "Intended Audience :: Financial and Insurance Industry",
+    "Intended Audience :: Healthcare Industry",
+    "Intended Audience :: Education",
+    "Intended Audience :: Science/Research",
+    
+    # License
     "License :: OSI Approved :: Apache Software License",
+    
+    # Operating System
     "Operating System :: OS Independent",
+    "Operating System :: POSIX",
+    "Operating System :: Microsoft :: Windows",
+    "Operating System :: MacOS",
+    "Operating System :: POSIX :: Linux",
+    
+    # Python Versions
     "Programming Language :: Python :: 3",
     "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3 :: Only",
+    "Typing :: Typed",
+    
+    # Topics
     "Topic :: Office/Business :: Office Suites",
+    "Topic :: Office/Business :: Financial :: Spreadsheet",
+    "Topic :: Office/Business :: Financial :: Accounting",
     "Topic :: Text Processing :: Markup :: HTML",
     "Topic :: Text Processing :: Markup :: XML",
     "Topic :: Text Processing :: Markup :: LaTeX",
+    "Topic :: Text Processing :: Markup :: Markdown",
+    "Topic :: Text Processing :: Filters",
+    "Topic :: Text Processing :: General",
     "Topic :: Utilities",
     "Topic :: Software Development :: Libraries :: Python Modules",
+    "Topic :: Software Development :: Libraries :: Application Frameworks",
     "Topic :: Software Development :: Code Generators",
     "Topic :: System :: Systems Administration",
+    "Topic :: System :: Archiving",
+    "Topic :: System :: Archiving :: Compression",
+    "Topic :: System :: Software Distribution",
+    "Topic :: Scientific/Engineering :: Information Analysis",
     "Topic :: Scientific/Engineering :: Artificial Intelligence",
-    "Typing :: Typed",
+    "Topic :: Scientific/Engineering :: Human Machine Interfaces",
+    "Topic :: Documentation",
+    "Topic :: Database",
+    "Topic :: Internet :: WWW/HTTP :: Dynamic Content",
+    "Topic :: Internet :: WWW/HTTP :: WSGI :: Application",
+    "Topic :: Multimedia :: Graphics :: Graphics Conversion",
+    "Topic :: Printing"
 ]
 packages = [{include = "redoc", from = "src"}]
 
 [tool.poetry.dependencies]
 python = ">=3.9,<4.0"
+
+# Project URLs for PyPI
+[tool.poetry.urls]
+"Homepage" = "https://github.com/text2doc/redoc"
+"Documentation" = "https://text2doc.github.io/redoc"
+"Changelog" = "https://github.com/text2doc/redoc/blob/main/CHANGELOG.md"
+"Bug Tracker" = "https://github.com/text2doc/redoc/issues"
+"Source Code" = "https://github.com/text2doc/redoc"
+"Download" = "https://pypi.org/project/redoc/#files"
+"Discussions" = "https://github.com/text2doc/redoc/discussions"
+"Gitter" = "https://gitter.im/text2doc/redoc"
+"Twitter" = "https://twitter.com/text2doc"
 
 # Core dependencies
 requests = "^2.31.0"
