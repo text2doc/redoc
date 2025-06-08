@@ -1,0 +1,3 @@
+../..  # Install redoc in development mode
+pytest>=7.4.3
+pytest-cov>=4.1.0

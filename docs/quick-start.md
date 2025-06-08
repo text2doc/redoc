@@ -1,94 +1,109 @@
 # 🚀 Quick Start Guide
 
-This guide will help you get started with redoc in just a few minutes.
+Welcome to Redoc, the universal document converter! This guide will help you get started with converting documents between various formats in just a few minutes.
 
 ## Prerequisites
 
-- Ollama with Mistral:7b model installed (see [Installation Guide](installation.md))
 - Python 3.8 or higher
 - Basic familiarity with command line
+- (Optional) Docker for containerized deployment
+- (Optional) Tesseract OCR for image text extraction
 
-## Your First Architecture
+## Your First Conversion
 
-1. **Start with a simple command**:
-   ```bash
-   redoc "I need a REST API for a todo app with user authentication"
-   ```
+### Convert a document
+```bash
+# Convert PDF to HTML
+redoc convert document.pdf document.html
 
-2. **Interactive Mode**:
-   ```bash
-   redoc shell
-   ```
-   Then type your requirements in the interactive prompt.
+# Convert HTML to PDF
+redoc convert page.html output.pdf
+```
+
+### Interactive Mode
+```bash
+# Start interactive shell
+redoc shell
+```
 
 ## Basic Commands
 
-### Generate Architecture
+### Document Conversion
 ```bash
-# Basic usage
-redoc "Your architecture requirements here"
+# Basic conversion
+redoc convert input.pdf output.html
 
-# Specify output format (default: markdown)
-redoc --format json "Your requirements"
+# Convert with a specific format
+redoc convert --from pdf --to html input.pdf output.html
 
-# Save output to a file
-redoc "Your requirements" > architecture.md
+# Process multiple files
+redoc batch "documents/*.pdf" --format html --output-dir html_output
 ```
 
-### Interactive Shell
+### Interactive Shell Commands
 ```bash
-# Start interactive shell
 redoc shell
 
 # In the shell:
 > help                 # Show available commands
-> clear               # Clear screen
+> convert input.pdf output.html  # Convert files
+> batch "*.pdf" --format html   # Batch process files
+> templates list      # List available templates
 > exit                # Exit the shell
 ```
 
-## Example Workflow
+## Example Workflow: Invoice Generation
 
-1. **Define your requirements**:
-   ```bash
-   redoc "I need a REST API for a blog with user authentication and comments"
+1. **Prepare your data** (data.json):
+   ```json
+   {
+     "invoice": {
+       "number": "INV-2023-001",
+       "date": "2023-11-15",
+       "items": [
+         {"description": "Web Design", "quantity": 10, "price": 100},
+         {"description": "Hosting", "quantity": 1, "price": 50}
+       ]
+     }
+   }
    ```
 
-2. **Review the generated architecture** in the terminal output
-
-3. **Generate implementation code**:
+2. **Convert JSON to PDF using a template**:
    ```bash
-   redoc "Generate implementation code for the blog API"
+   redoc convert --template invoice.html data.json invoice.pdf
    ```
 
-4. **Save the output** to a file for future reference:
+3. **Extract data from an existing document**:
    ```bash
-   redoc "Generate implementation code for the blog API" > blog_implementation.md
+   redoc extract --template invoice_schema.json scanned_invoice.pdf extracted_data.json
    ```
 
-## Advanced Example
+## Advanced Examples
 
-1. **Generate a microservices architecture**:
-   ```bash
-   redoc "I need a microservices architecture for an e-commerce platform with:
-   - Product catalog
-   - User authentication
-   - Shopping cart
-   - Payment processing
-   - Order management"
-   ```
+### Batch Processing
+```bash
+# Convert all PDFs in a directory to HTML
+redoc batch "invoices/*.pdf" --format html --output-dir html_output
 
-2. **Review the generated architecture**
+# Convert with a template
+redoc batch "data/*.json" --template invoice.html --output-dir pdf_invoices
+```
 
-3. **Refine and iterate**:
-   ```bash
-   redoc "Add Redis caching to the previous architecture"
-   ```
+### Using Docker
+```bash
+# Run a conversion with Docker
+docker run -v $(pwd):/data text2doc/redoc convert input.pdf output.html
+
+# Start the web interface
+docker run -p 8000:8000 -v $(pwd)/templates:/app/templates text2doc/redoc serve
+```
 
 ## Next Steps
 
-- Explore more [features](features.md) of redoc
-- Check out the [API Reference](api.md) for advanced usage
-- Review the [installation guide](installation.md) for configuration options
+- Learn about [templates](templates.md) for custom document generation
+- Explore [AI-powered features](ai.md) for smart document processing
+- Check the [API Reference](api.md) for programmatic usage
+- Review the [installation guide](installation.md) for advanced setup
 
 ## Getting Help
 

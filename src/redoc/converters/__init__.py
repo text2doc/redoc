@@ -1,6 +1,6 @@
 """Document format converters for Redoc."""
 
-from typing import Dict, Type, Optional, Union
+from typing import Any, Dict, Type, Optional, Union
 from pathlib import Path
 import importlib
 import pkgutil

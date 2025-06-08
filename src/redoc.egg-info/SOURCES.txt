@@ -1,0 +1,13 @@
+LICENSE
+README.md
+pyproject.toml
+src/redoc/__init__.py
+src/redoc/cli.py
+src/redoc/core.py
+src/redoc/exceptions.py
+src/redoc.egg-info/PKG-INFO
+src/redoc.egg-info/SOURCES.txt
+src/redoc.egg-info/dependency_links.txt
+src/redoc.egg-info/entry_points.txt
+src/redoc.egg-info/requires.txt
+src/redoc.egg-info/top_level.txt

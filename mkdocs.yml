@@ -195,7 +195,8 @@ nav:
     - Quick Start: quick-start.md
   - Features: features.md
   - API Reference: api.md
-  - Source Code: src.md
+  - Templates: templates.md
+  - AI Features: ai.md
 
 # Strict mode for better error reporting
 strict: true
