@@ -1,6 +1,6 @@
 [project]
 name = "redoc"
-version = "0.2.2"
+version = "0.2.3"
 description = "Universal document converter with template support, OCR, and AI-powered processing. Convert between PDF, DOCX, HTML, XML, JSON, EPUB and more with a simple CLI or Python API."
 readme = "README.md"
 authors = [
