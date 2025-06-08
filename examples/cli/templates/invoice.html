@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Invoice #{{ invoice_number }}</title>
+    <style>
+        body { font-family: Arial, sans-serif; line-height: 1.6; margin: 0; padding: 20px; color: #333; }
+        .container { max-width: 800px; margin: 0 auto; }
+        .header { text-align: center; margin-bottom: 30px; }
+        .header h1 { color: #2c3e50; margin-bottom: 5px; }
+        .details { display: flex; justify-content: space-between; margin-bottom: 30px; }
+        .from, .to { flex: 1; }
+        .to { text-align: right; }
+        table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+        th { background-color: #f8f9fa; text-align: left; padding: 10px; }
+        td { padding: 10px; border-bottom: 1px solid #eee; }
+        .total { text-align: right; font-weight: bold; font-size: 1.2em; }
+        .footer { margin-top: 50px; font-size: 0.9em; color: #7f8c8d; text-align: center; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>INVOICE</h1>
+            <p>#{{ invoice_number }} | {{ date }}</p>
+        </div>
+        
+        <div class="details">
+            <div class="from">
+                <h3>From:</h3>
+                <p>{{ company_name }}<br>
+                {{ company_address | replace('\n', '<br>') }}</p>
+            </div>
+            <div class="to">
+                <h3>To:</h3>
+                <p>{{ client_name }}<br>
+                {{ client_address | replace('\n', '<br>') }}</p>
+            </div>
+        </div>
+        
+        <table>
+            <thead>
+                <tr>
+                    <th>Description</th>
+                    <th>Quantity</th>
+                    <th>Unit Price</th>
+                    <th>Amount</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in items %}
+                <tr>
+                    <td>{{ item.description }}</td>
+                    <td>{{ item.quantity }}</td>
+                    <td>{{ "%.2f"|format(item.unit_price) }} {{ currency }}</td>
+                    <td>{{ "%.2f"|format(item.quantity * item.unit_price) }} {{ currency }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        
+        <div class="total">
+            <p>Total: {{ "%.2f"|format(total) }} {{ currency }}</p>
+            {% if tax_rate > 0 %}
+            <p>Tax ({{ tax_rate }}%): {{ "%.2f"|format(total * tax_rate / 100) }} {{ currency }}</p>
+            <p>Total Due: {{ "%.2f"|format(total * (1 + tax_rate / 100)) }} {{ currency }}</p>
+            {% endif %}
+        </div>
+        
+        {% if notes %}
+        <div class="notes">
+            <h3>Notes:</h3>
+            <p>{{ notes | replace('\n', '<br>') }}</p>
+        </div>
+        {% endif %}
+        
+        <div class="footer">
+            <p>Thank you for your business!</p>
+            <p>{{ company_name }} | {{ company_email }} | {{ company_phone }}</p>
+        </div>
+    </div>
+</body>
+</html>

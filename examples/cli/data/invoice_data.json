@@ -1,0 +1,31 @@
+{
+    "invoice_number": "INV-2025-001",
+    "date": "2025-06-08",
+    "company_name": "Acme Corp",
+    "company_address": "123 Business St.\nNew York, NY 10001\nUnited States",
+    "company_email": "billing@acmecorp.com",
+    "company_phone": "+1 (555) 123-4567",
+    "client_name": "John Doe",
+    "client_address": "456 Client Ave\nSan Francisco, CA 94105\nUnited States",
+    "currency": "USD",
+    "tax_rate": 8.25,
+    "items": [
+        {
+            "description": "Web Development Services",
+            "quantity": 40,
+            "unit_price": 100.00
+        },
+        {
+            "description": "UI/UX Design",
+            "quantity": 20,
+            "unit_price": 120.00
+        },
+        {
+            "description": "Project Management",
+            "quantity": 30,
+            "unit_price": 80.00
+        }
+    ],
+    "notes": "Payment due within 30 days.\nPlease include the invoice number in your payment reference.",
+    "total": 8800.00
+}

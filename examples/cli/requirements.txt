@@ -1,0 +1,4 @@
+../..  # Install redoc in development mode
+rich>=13.0.0
+click>=8.1.7
+python-dotenv>=1.0.0

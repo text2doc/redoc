@@ -1,0 +1,61 @@
+# Redoc Project - Next Steps
+
+## High Priority
+1. ✓ Fix pyproject.toml TOML syntax error
+   - ✓ Fixed unclosed inline table
+   - ✓ Validated with `poetry check`
+
+2. ✓ Resolve MkDocs Build Warnings
+   - ✓ Fixed deprecation warnings
+   - ✓ Updated to use modern Python packaging standards (PEP 621)
+
+3. Documentation
+   - ✓ Added template examples in /examples/
+   - [ ] Document the AI features in more detail
+   - ✓ Added more usage examples
+   - [ ] Create a migration guide for users of previous versions
+
+4. Testing
+   - ✓ Added integration tests for the web API
+   - ✓ Added tests for template system
+   - [ ] Add performance benchmarks
+
+## Medium Priority
+5. CI/CD Pipeline
+   - [ ] Set up automated testing on multiple Python versions
+   - [ ] Configure code coverage reporting
+   - [ ] Add automated documentation deployment
+
+6. Template System
+   - ✓ Added sample templates in /examples/
+   - [ ] Create template validation
+   - ✓ Added template examples for common use cases
+
+7. Performance
+   - [ ] Profile and optimize document conversion
+   - [ ] Add caching for template compilation
+   - [ ] Implement parallel processing for batch operations
+
+## Low Priority
+8. Additional Features
+   - Add support for more document formats
+   - Enhance AI capabilities
+   - Add more output formatting options
+
+9. Developer Experience
+   - Improve error messages
+   - Add more detailed logging
+   - Create developer documentation
+
+## Documentation
+- [x] Basic documentation structure
+- [x] API reference
+- [x] User guide (basic)
+- [x] Template authoring guide (basic)
+- [ ] Deployment guide
+
+## Testing
+- [x] Unit tests
+- [x] Integration tests (basic)
+- [ ] Performance tests
+- [ ] Browser tests for web interface
