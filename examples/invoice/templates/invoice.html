@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Invoice {{ invoice_number }}</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #eee;
+        }
+        .company-info {
+            flex: 1;
+        }
+        .invoice-info {
+            text-align: right;
+        }
+        h1 {
+            color: #2c3e50;
+            margin: 0 0 5px 0;
+        }
+        .subtitle {
+            color: #7f8c8d;
+            margin: 0 0 20px 0;
+            font-size: 1.2em;
+        }
+        .billing-info {
+            display: flex;
+            margin-bottom: 30px;
+        }
+        .billing-from {
+            flex: 1;
+        }
+        .billing-to {
+            flex: 1;
+            background: #f9f9f9;
+            padding: 15px;
+            border-radius: 5px;
+        }
+        .billing-to h3 {
+            margin-top: 0;
+            color: #2c3e50;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 30px;
+        }
+        th {
+            background-color: #2c3e50;
+            color: white;
+            text-align: left;
+            padding: 12px;
+        }
+        td {
+            padding: 12px;
+            border-bottom: 1px solid #ddd;
+        }
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        .totals {
+            float: right;
+            width: 300px;
+        }
+        .totals table {
+            width: 100%;
+        }
+        .totals td {
+            text-align: right;
+            padding: 8px 12px;
+        }
+        .totals td:first-child {
+            text-align: left;
+            font-weight: bold;
+        }
+        .totals tr:last-child td {
+            font-weight: bold;
+            font-size: 1.1em;
+            border-top: 2px solid #2c3e50;
+        }
+        .notes {
+            clear: both;
+            margin-top: 50px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 50px;
+            color: #7f8c8d;
+            font-size: 0.9em;
+        }
+        .status {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 3px;
+            font-weight: bold;
+            text-transform: uppercase;
+            font-size: 0.8em;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+        }
+        .status-draft { background-color: #f39c12; color: white; }
+        .status-sent { background-color: #3498db; color: white; }
+        .status-paid { background-color: #2ecc71; color: white; }
+        .status-overdue { background-color: #e74c3c; color: white; }
+        .status-cancelled { background-color: #95a5a6; color: white; }
+        .payment-info {
+            background: #f9f9f9;
+            padding: 15px;
+            border-radius: 5px;
+            margin-top: 30px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="company-info">
+            <h1>{{ company.name }}</h1>
+            <div>{{ '\n'.join(company.address) if company.address is string else '\n'.join(company.address) }}</div>
+            <div>{% if company.phone %}Phone: {{ company.phone }}{% endif %}</div>
+            <div>{% if company.email %}Email: {{ company.email }}{% endif %}</div>
+            <div>{% if company.website %}{{ company.website }}{% endif %}</div>
+        </div>
+        <div class="invoice-info">
+            <h1>INVOICE</h1>
+            <div class="status status-{{ status|lower }}">{{ status|upper }}</div>
+            <div><strong>Invoice #:</strong> {{ invoice_number }}</div>
+            <div><strong>Date:</strong> {{ issue_date }}</div>
+            <div><strong>Due Date:</strong> {{ due_date }}</div>
+        </div>
+    </div>
+
+    <div class="billing-info">
+        <div class="billing-from">
+            <h3>From:</h3>
+            <div>{{ company.name }}</div>
+            <div>{{ '\n'.join(company.address) if company.address is string else '\n'.join(company.address) }}</div>
+            <div>{% if company.phone %}Phone: {{ company.phone }}{% endif %}</div>
+            <div>{% if company.email %}{{ company.email }}{% endif %}</div>
+        </div>
+        <div class="billing-to">
+            <h3>Bill To:</h3>
+            <div>{{ client.name }}</div>
+            <div>{{ '\n'.join(client.address) if client.address is string else '\n'.join(client.address) }}</div>
+            <div>{% if client.phone %}Phone: {{ client.phone }}{% endif %}</div>
+            <div>{% if client.email %}{{ client.email }}{% endif %}</div>
+        </div>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Description</th>
+                <th>Qty</th>
+                <th>Unit Price</th>
+                <th>Tax</th>
+                <th>Amount</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in items %}
+            <tr>
+                <td>{{ loop.index }}</td>
+                <td>{{ item.description }}</td>
+                <td>{{ "%g"|format(item.quantity) }}</td>
+                <td>{{ "%.2f"|format(item.unit_price) }} {{ currency }}</td>
+                <td>{{ "%d"|format(item.tax_rate * 100) }}%</td>
+                <td>{{ "%.2f"|format(item.total) }} {{ currency }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <div class="totals">
+        <table>
+            <tr>
+                <td>Subtotal:</td>
+                <td>{{ "%.2f"|format(subtotal) }} {{ currency }}</td>
+            </tr>
+            <tr>
+                <td>Tax:</td>
+                <td>{{ "%.2f"|format(tax_amount) }} {{ currency }}</td>
+            </tr>
+            {% if discount > 0 %}
+            <tr>
+                <td>Discount:</td>
+                <td>-{{ "%.2f"|format(discount) }} {{ currency }}</td>
+            </tr>
+            {% endif %}
+            <tr>
+                <td><strong>Total:</strong></td>
+                <td><strong>{{ "%.2f"|format(total) }} {{ currency }}</strong></td>
+            </tr>
+        </table>
+    </div>
+
+    {% if payment_instructions or bank_info %}
+    <div class="payment-info">
+        <h3>Payment Information</h3>
+        {% if payment_instructions %}
+        <p>{{ payment_instructions }}</p>
+        {% endif %}
+        
+        {% if bank_info %}
+        <p>
+            <strong>Bank Transfer:</strong><br>
+            Bank: {{ bank_info.bank_name }}<br>
+            Account Name: {{ bank_info.account_name }}<br>
+            Account #: {{ bank_info.account_number }}<br>
+            {% if bank_info.routing_number %}Routing #: {{ bank_info.routing_number }}<br>{% endif %}
+            {% if bank_info.swift_code %}SWIFT: {{ bank_info.swift_code }}<br>{% endif %}
+            {% if bank_info.iban %}IBAN: {{ bank_info.iban }}<br>{% endif %}
+        </p>
+        {% endif %}
+    </div>
+    {% endif %}
+
+    {% if notes or terms %}
+    <div class="notes">
+        {% if notes %}
+        <p><strong>Notes:</strong> {{ notes }}</p>
+        {% endif %}
+        
+        {% if terms %}
+        <p><strong>Terms:</strong> {{ terms }}</p>
+        {% endif %}
+    </div>
+    {% endif %}
+
+    <div class="footer">
+        <p>{{ company.name }} | {{ company.address[0] }}, {{ company.address[1] if company.address|length > 1 else '' }}</p>
+        <p>Thank you for your business!</p>
+    </div>
+</body>
+</html>

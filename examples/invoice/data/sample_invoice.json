@@ -1,0 +1,64 @@
+{
+    "invoice_number": "INV-2023-001",
+    "issue_date": "2023-11-15",
+    "due_date": "2023-12-15",
+    "status": "sent",
+    "currency": "USD",
+    "notes": "Thank you for your business. Please make payment by the due date.",
+    "terms": "Payment due within 30 days of issue date.",
+    
+    "company": {
+        "name": "Acme Corporation",
+        "address": [
+            "123 Business Rd",
+            "San Francisco, CA 94107",
+            "United States"
+        ],
+        "phone": "+1 (555) 123-4567",
+        "email": "billing@acmecorp.com",
+        "website": "www.acmecorp.com"
+    },
+    
+    "client": {
+        "name": "Tech Solutions Inc.",
+        "address": [
+            "456 Client Ave",
+            "New York, NY 10001",
+            "United States"
+        ],
+        "phone": "+1 (555) 987-6543",
+        "email": "accounts@techsolutions.com"
+    },
+    
+    "items": [
+        {
+            "description": "Web Development Services",
+            "quantity": 40,
+            "unit_price": 75.00,
+            "tax_rate": 0.20
+        },
+        {
+            "description": "UI/UX Design",
+            "quantity": 25,
+            "unit_price": 95.00,
+            "tax_rate": 0.20
+        },
+        {
+            "description": "Project Management",
+            "quantity": 15,
+            "unit_price": 120.00,
+            "tax_rate": 0.20
+        }
+    ],
+    
+    "discount": 150.00,
+    "payment_instructions": "Please include the invoice number in your payment reference.",
+    "bank_info": {
+        "bank_name": "First National Bank",
+        "account_name": "Acme Corporation Inc.",
+        "account_number": "1234567890",
+        "routing_number": "021000021",
+        "swift_code": "FNBOUS44",
+        "iban": "US6005400000000000000000"
+    }
+}
