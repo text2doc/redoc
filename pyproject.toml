@@ -1,50 +1,91 @@
 [tool.poetry]
 name = "redoc"
-version = "0.1.7"
-description = "Multi-Level Docuemtn converter from pdf to xml or html and json , from json+html to xml or pdf or doc or epub, with OCR and Generator powered by Ollama Mistral:7b"
+version = "0.2.0"
+description = "Universal document converter with template support, OCR, and AI-powered processing. Convert between PDF, DOCX, HTML, XML, JSON, EPUB and more with a simple CLI or Python API."
+long-description = "README.md"
+long-description-content-type = "text/markdown"
 authors = ["Tom Sapletta <info@softreck.dev>"]
+maintainers = ["Tom Sapletta <info@softreck.dev>"]
 readme = "README.md"
 license = "Apache-2.0"
 homepage = "https://github.com/text2doc/redoc"
 repository = "https://github.com/text2doc/redoc"
 documentation = "https://text2doc.github.io/redoc"
-keywords = ["ai", "architecture", "llm", "ollama", "solution-generator", "mistral"]
+keywords = [
+    "document-converter", "pdf", "docx", "html", "xml", "json", "epub", 
+    "ocr", "template-engine", "document-processing", "ai", "llm", "ollama",
+    "mistral", "cli-tool", "automation", "productivity"
+]
 classifiers = [
-    "Development Status :: 3 - Alpha",
+    "Development Status :: 4 - Beta",
     "Intended Audience :: Developers",
     "Intended Audience :: System Administrators",
+    "Intended Audience :: Information Technology",
     "License :: OSI Approved :: Apache Software License",
     "Operating System :: OS Independent",
     "Programming Language :: Python :: 3",
-    "Programming Language :: Python :: 3.8",
     "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
+    "Topic :: Office/Business :: Office Suites",
+    "Topic :: Text Processing :: Markup :: HTML",
+    "Topic :: Text Processing :: Markup :: XML",
+    "Topic :: Text Processing :: Markup :: LaTeX",
+    "Topic :: Utilities",
+    "Topic :: Software Development :: Libraries :: Python Modules",
     "Topic :: Software Development :: Code Generators",
     "Topic :: System :: Systems Administration",
     "Topic :: Scientific/Engineering :: Artificial Intelligence",
+    "Typing :: Typed",
 ]
 packages = [{include = "redoc", from = "src"}]
 
 [tool.poetry.dependencies]
 python = ">=3.9,<4.0"
+
+# Core dependencies
 requests = "^2.31.0"
 pydantic = "^2.5.0"
 click = "^8.1.7"
-rich = "^13.7.0"
+      
+# Document processing
+python-docx = {version = "^1.1.0", optional = true}
+pypdf = {version = "^3.17.0", optional = true}
+lxml = {version = "^5.1.0"
+      
+# CLI and output formatting
+rich = {extras = ["all"]}
 pyyaml = "^6.0.1"
-tabulate = "^0.9.0"
+tabulate = "^1.0.0"
+      
+# Template and data processing
 jinja2 = "^3.1.2"
 pathlib = "^1.0.1"
 dataclasses-json = "^0.6.3"
+      
+# Type hints and utilities
 typing-extensions = "^4.8.0"
 python-dotenv = "^1.0.0"
-python-multipart = "^0.0.6"
+python-multipart = {version = "^0.0.6", optional = true}
+      
+# Optional dependencies for specific features
 fastapi = {version = "^0.104.0", optional = true}
 uvicorn = {version = "^0.24.0", optional = true}
-mkdocs-material = {extras = ["imaging"], version = "^9.6.14"}
-mkdocs-material-extensions = "^1.3.1"
+      
+# Documentation
+mkdocs-material = {extras = ["imaging"], version = "^9.6.14", optional = true}
+mkdocs-material-extensions = {version = "^1.3.1", optional = true}
+      
+# PDF and image processing
+pdf2image = {version = "^1.17.0", optional = true}
+pillow = {version = "^10.2.0", optional = true}
+      
+# Optional AI/ML features
+openai = {version = "^1.3.0", optional = true}
+      
+# Optional CLI enhancements
+rich-click = {version = "^1.7.0", optional = true}
 
 [tool.poetry.group.dev.dependencies]
 pytest = "^7.4.3"
@@ -79,26 +120,70 @@ mkdocs-material-extensions = "^1.3.1"
 mkdocs-minify-plugin = "^0.8.0"
 
 [tool.poetry.scripts]
-redoc = "redoc.cli:cli"
+redoc = "redoc.cli:main"
+redoc-cli = "redoc.cli:cli"
 redoc-shell = "redoc.cli:shell"
+redoc-api = "redoc.api:main"
 
 [tool.poetry.extras]
+# Core functionality
 cli = [
-    "click",
-    "rich",
-    "tabulate",
-    "pyyaml",
-    "python-dotenv",
-    "python-multipart"
+    "click>=8.1.7",
+    "rich>=13.0.0",
+    "tabulate>=0.9.0",
+    "pyyaml>=6.0.1",
+    "python-dotenv>=1.0.0",
+    "python-multipart>=0.0.6",
+    "rich-click>=1.7.0"
 ]
+
+# Document processing
+docs = [
+    "python-docx>=0.8.11",
+    "pypdf>=3.0.0",
+    "lxml>=4.9.0",
+    "pdf2image>=1.16.0",
+    "pillow>=10.0.0"
+]
+
+# Web and API
 server = [
-    "fastapi",
-    "uvicorn"
+    "fastapi>=0.104.0",
+    "uvicorn>=0.24.0",
+    "python-multipart>=0.0.6"
 ]
-visualization = [
-    "matplotlib",
-    "plotly",
-    "graphviz"
+
+# AI and ML features
+ai = [
+    "openai>=1.0.0",
+    "numpy>=1.24.0",
+      "scikit-learn>=1.3.0"
+]
+
+# Development and testing
+dev = [
+    "pytest>=7.4.0",
+    "pytest-cov>=4.1.0",
+    "black>=23.0.0",
+    "mypy>=1.0.0",
+    "flake8>=6.0.0",
+    "pre-commit>=3.0.0"
+]
+
+# Documentation
+docs = [
+    "mkdocs-material>=9.0.0",
+      "mkdocstrings[python]>=0.20.0"
+]
+
+# All features
+all = [
+    "redoc[cli]",
+    "redoc[docs]",
+    "redoc[server]",
+    "redoc[ai]",
+    "redoc[dev]"
+]
 ]
 export = [
     "jinja2",
@@ -194,11 +279,62 @@ omit = [
 ]
 
 [tool.coverage.report]
+# Project URLs
+[project.urls]
+Homepage = "https://github.com/text2doc/redoc"
+Documentation = "https://text2doc.github.io/redoc"
+Changelog = "https://github.com/text2doc/redoc/blob/main/CHANGELOG.md"
+Issues = "https://github.com/text2doc/redoc/issues"
+Source = "https://github.com/text2doc/redoc"
+
+# Badges for PyPI and documentation
+[project.optional-dependencies]
+badges = [
+    "![Python Version](https://img.shields.io/badge/python-3.9%2B-blue.svg",
+    "![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)",
+      "![Build Status](https://github.com/text2doc/redoc/actions/workflows/tests.yml/badge.svg)",
+      "![PyPI Version](https://img.shields.io/pypi/v/redoc.svg)",
+      "![PyPI Downloads](https://img.shields.io/pypi/dm/redoc.svg)",
+      "![Code Coverage](https://img.shields.io/codecov/c/github/text2doc/redoc"
+]
+
+# Tool configurations
+[tool.mypy]
+python_version = "3.9"
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = true
+
+[tool.ruff]
+line-length = 88
+target-version = "py39"
+select = [
+    "E",  # pycodestyle errors
+    "F",  # pyflakes
+    "I",  # isort
+    "N",  # pep8-naming
+    "W",  # pycodestyle warnings
+    "UP",  # pyupgrade
+    "PL",  # pylint
+    "RUF",  # ruff-specific rules
+]
+
+# Exclude common patterns from coverage
+[tool.coverage.run]
+source = ["redoc"]
+omit = [
+    "**/tests/**",
+    "**/__main__.py",
+    "**/__init__.py",
+    "**/version.py",
+]
+
+# Exclude common patterns from coverage reporting
 exclude_lines = [
     "pragma: no cover",
     "def __repr__",
     "if self.debug:",
-    "if settings.DEBUG",
+    "if settings.DEBUG":
     "raise AssertionError",
     "raise NotImplementedError",
     "if 0:",
